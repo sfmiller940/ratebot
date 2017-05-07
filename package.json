@@ -1,12 +1,19 @@
 {
-  "name": "openshift-cartridge-nodejs-template",
+  "name": "nodebb",
   "version": "1.0.1",
-  "description": "Custom Node.js cartridge for OpenShift - sample application",
+  "description": "Basic anonymous bulletin board.",
   "private": true,
   "main": "start.js",
   "scripts": {
     "start": "node --use_strict start.js"
   },
-  "author": "Ionut-Cristian Florescu <ionut.florescu@gmail.com>",
-  "license": "ISC"
+  "author": "SFMiller940 <nineforty@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "express": "*",
+    "body-parser": "*",
+    "request": "*",
+    "path": "*",
+    "mongoose": "*"
+  }
 }
