@@ -6,7 +6,8 @@ const request      = require('request'),
       express      = require('express'),
       bodyParser   = require('body-parser'),
       mongoose     = require('mongoose'),
-      rates        = require('./models/rates');
+      rates        = require('./models/rates'),
+      coins        = ['STR','BTC','BTS','CLAM','DOGE','DASH','LTC','MAID','XMR','XRP','ETH','FCT'];
 
 // default to a 'localhost' configuration:
 var connection_string = '127.0.0.1:27017/ratebot';
@@ -24,17 +25,19 @@ mongoose.connect(connection_string);
 getRates();
 function getRates(){
   console.log('Rates!');
-  request('https://poloniex.com/public?command=returnLoanOrders&currency=BTC',function(error,response,body){
-    body = JSON.parse(body);
-    var rate = new rates({
-      coin : 'BTC',
-      offers: body['offers'],
-      demands: body['demands'],
-      created_at: new Date()
-    });
-    rate.save(function(err){
-      if(err){ console.log('Save error: ' + err); }
-      else{ console.log('Rate saved.'); }
+  coins.forEach(function(coin){
+    request('https://poloniex.com/public?command=returnLoanOrders&currency='+coin,function(error,response,body){
+      body = JSON.parse(body);
+      var rate = new rates({
+        coin : coin,
+        offers: body['offers'],
+        demands: body['demands'],
+        created_at: new Date()
+      });
+      rate.save(function(err){
+        if(err){ console.log('Save error: ' + err); }
+        else{ console.log('Rate saved.'); }
+      });
     });
   });
   setTimeout(getRates, 600000);
