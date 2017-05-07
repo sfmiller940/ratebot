@@ -26,7 +26,8 @@ function getRates(){
     var rate = new rates({
       coin : 'BTC',
       offers:body['offers'],
-      demands:body['demands']
+      demands:body['demands'],
+      created_at: new Date()
     });
     rate.save(function(err){
       console.log('Save error: ' + err);
