@@ -28,6 +28,9 @@ function getRates(){
       offers:body['offers'],
       demands:body['demands']
     });
+    rate.save(function(err){
+      console.log('Save error: ' + err);
+    });
   });
   setTimeout(getRates, 60000);
 }
