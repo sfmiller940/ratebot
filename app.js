@@ -23,6 +23,7 @@ getRates();
 function getRates(){
   console.log('Rates!');
   request('https://poloniex.com/public?command=returnLoanOrders&currency=BTC',function(error,response,body){
+    body = JSON.parse(body);
     var rate = new rates({
       coin : 'BTC',
       offers:body['offers'],
