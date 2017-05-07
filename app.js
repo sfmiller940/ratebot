@@ -19,6 +19,8 @@ if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
   process.env.OPENSHIFT_APP_NAME;
 }
 
+mongoose.connect(connection_string);
+
 getRates();
 function getRates(){
   console.log('Rates!');
@@ -26,12 +28,13 @@ function getRates(){
     body = JSON.parse(body);
     var rate = new rates({
       coin : 'BTC',
-      offers:body['offers'],
-      demands:body['demands'],
+      offers: body['offers'],
+      demands: body['demands'],
       created_at: new Date()
     });
     rate.save(function(err){
-      console.log('Save error: ' + err);
+      if(err){ console.log('Save error: ' + err); }
+      else{ console.log('Rate saved.'); }
     });
   });
   setTimeout(getRates, 60000);
