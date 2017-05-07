@@ -37,7 +37,7 @@ function getRates(){
       else{ console.log('Rate saved.'); }
     });
   });
-  setTimeout(getRates, 60000);
+  setTimeout(getRates, 600000);
 }
 
 var app = express();
