@@ -63,6 +63,12 @@ app
     });
   })
 
+  .get('/:coin', function(req, res){
+    rates.find({ coin: req.params.coin }, function (err, docs) {
+        res.json(docs);
+    });
+  })
+
   .listen(env.NODE_PORT || 3000, env.NODE_IP || 'localhost');
 
 console.log('Server running.');
