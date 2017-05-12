@@ -5,6 +5,7 @@ var Schema = mongoose.Schema;
 // create a schema
 var rateSchema = new Schema({
   coin: String,
+  price: Number,
   offers:Array,
   demands:Array,
   created_at: Date

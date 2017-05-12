@@ -1,0 +1,85 @@
+<html>
+<head>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-dateFormat/1.0/jquery.dateFormat.min.js"></script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+
+<body>
+  
+  <div id="myDiv" style="width: 480px; height: 400px;"><!-- Plotly chart will be drawn inside this DIV --></div>
+  <script>
+
+    var dates, loOffers, hiDemands, heights, prices;
+
+    jQuery.get(
+      "/BTC",
+      {},
+      function(data) {
+        dates = data.map(function(slice){
+          return jQuery.format.date(slice.created_at, "yyyy-MM-dd HH:mm:ss")
+        });
+        console.log(dates);
+        loOffers = data.map(function(slice){ return Math.min.apply(null, slice.offers.map(function(offer){ return offer.rate } ) ); });
+        console.log(loOffers);
+        hiDemands = data.map(function(slice){ return Math.max.apply(null, slice.demands.map(function(demand){ return demand.rate } ) ); });
+        loDemands = data.map(function(slice){ return Math.min.apply(null, slice.demands.map(function(demand){ return demand.rate } ) ); });
+        console.log(hiDemands);
+        heights = hiDemands.map(function(demand, ind){ return ( loOffers[ind] - demand); });
+        console.log(heights);   
+        prices = data.map(function(slice){ return slice.price; });   
+        console.log(prices);   
+
+        //Base of highest demand
+        var trace0 = {
+          x: dates,
+          y: hiDemands,
+          marker: {
+            color: 'rgba(125,1,1,1.0)'
+          },
+          type: 'bar'
+        };
+
+        var trace1 = {
+          x: dates,
+          y: loOffers.map( function(offer,ind){ return offer - hiDemands[ind]; } ),
+          marker: {
+            color: 'rgba(125,125,50,1.0)'
+          },
+          type: 'bar'
+        };
+
+        var trace2 = {
+          x: dates,
+          y: prices,
+          name: 'yaxis2 data',
+          yaxis: 'y2',
+          type: 'scatter'
+        };
+
+        var data = [trace0, trace1, trace2];
+
+        var layout = {
+          title: 'BTC Rates',
+          barmode: 'stack',
+          paper_bgcolor: 'rgba(245,246,249,1)',
+          plot_bgcolor: 'rgba(245,246,249,1)',
+          width: window.innerWidth,
+          height: window.innerHeight,
+          showlegend: false,
+          annotations: [],
+          xaxis : { type:'date' },
+          yaxis2: {
+            tickfont: {color: 'rgb(148, 103, 189)'},
+            overlaying: 'y',
+            side: 'right'
+          }
+        };
+
+        Plotly.newPlot('myDiv', data, layout);
+      }
+    );
+
+  </script>
+</body>
+</html>

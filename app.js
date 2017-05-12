@@ -25,18 +25,22 @@ mongoose.connect(connection_string);
 getRates();
 function getRates(){
   console.log('Rates!');
-  coins.forEach(function(coin){
-    request('https://poloniex.com/public?command=returnLoanOrders&currency='+coin,function(error,response,body){
-      body = JSON.parse(body);
-      var rate = new rates({
-        coin : coin,
-        offers: body['offers'],
-        demands: body['demands'],
-        created_at: new Date()
-      });
-      rate.save(function(err){
-        if(err){ console.log('Save error: ' + err); }
-        else{ console.log('Rate saved.'); }
+  request('https://poloniex.com/public?command=returnTicker', function(error, response, ticker){
+    ticker = JSON.parse(ticker);
+    coins.forEach(function(coin){
+      request('https://poloniex.com/public?command=returnLoanOrders&currency='+coin,function(error,response,body){
+        body = JSON.parse(body);
+        var rate = new rates({
+          coin : coin,
+          price: ticker[(coin === 'BTC' ? 'USDT_BTC' : 'BTC_' + coin  )]['last'],
+          offers: body['offers'],
+          demands: body['demands'],
+          created_at: new Date()
+        });
+        rate.save(function(err){
+          if(err){ console.log('Save error: ' + err); }
+          else{ console.log('Rate saved.'); }
+        });
       });
     });
   });
@@ -58,7 +62,7 @@ app
   })
 
   .get('/', function(req, res){
-    request('https://poloniex.com/public?command=returnLoanOrders&currency=BTC',function(error,response,body){
+    request('https://poloniex.com/public?command=returnTicker',function(error,response,body){
       res.end(body);
     });
   })
