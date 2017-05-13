@@ -24,7 +24,7 @@
           .map( function(slice){ return slice.offers; } )
           .map( function(offers){
             return offers.filter( function(offer){
-              if( parseInt( offer.amount, 10) < 0.01 ){ return false; }
+              if( parseFloat( offer.amount, 10) < 0.01 ){ return false; }
               return true;
             });
           })
@@ -33,7 +33,7 @@
           .map( function(slice){ return slice.demands; } )
           .map( function(demands){
             return demands.filter( function(demand){
-              if( parseInt( demand.amount, 10) < 0.01 ){ return false; }
+              if( parseFloat( demand.amount, 10) < 0.01 ){ return false; }
               return true;
             });
           })
