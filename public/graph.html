@@ -20,48 +20,63 @@
           return jQuery.format.date(slice.created_at, "yyyy-MM-dd HH:mm:ss")
         });
         console.log(dates);
-        loOffers = data.map(function(slice){ return Math.min.apply(null, slice.offers.map(function(offer){ return offer.rate } ) ); });
-        console.log(loOffers);
-        hiDemands = data.map(function(slice){ return Math.max.apply(null, slice.demands.map(function(demand){ return demand.rate } ) ); });
-        loDemands = data.map(function(slice){ return Math.min.apply(null, slice.demands.map(function(demand){ return demand.rate } ) ); });
-        console.log(hiDemands);
-        heights = hiDemands.map(function(demand, ind){ return ( loOffers[ind] - demand); });
-        console.log(heights);   
+        loOffers = data
+          .map( function(slice){ return slice.offers; } )
+          .map( function(offers){
+            return offers.filter( function(offer){
+              if( parseInt( offer.amount, 10) < 0.01 ){ return false; }
+              return true;
+            });
+          })
+          .map(function(offers){ return Math.min.apply(null, offers.map(function(offer){ return offer.rate } ) ); });
+        hiDemands = data
+          .map( function(slice){ return slice.demands; } )
+          .map( function(demands){
+            return demands.filter( function(demand){
+              if( parseInt( demand.amount, 10) < 0.01 ){ return false; }
+              return true;
+            });
+          })
+          .map(function(demands){ return Math.max.apply(null, demands.map(function(demand){ return demand.rate } ) ); });
+        console.log( hiDemands );
+ 
         prices = data.map(function(slice){ return slice.price; });   
-        console.log(prices);   
 
         //Base of highest demand
         var trace0 = {
           x: dates,
           y: hiDemands,
           marker: {
-            color: 'rgba(125,1,1,1.0)'
+            color: 'rgba(125,255,125,1.0)'
           },
           type: 'bar'
         };
 
         var trace1 = {
           x: dates,
-          y: loOffers.map( function(offer,ind){ return offer - hiDemands[ind]; } ),
+          y: loOffers, //.map( function(offer,ind){ return offer - hiDemands[ind]; } ),
           marker: {
-            color: 'rgba(125,125,50,1.0)'
+            color: 'rgba(125,125,255,1.0)'
           },
           type: 'bar'
         };
 
-        var trace2 = {
+        var trace3 = {
           x: dates,
           y: prices,
           name: 'yaxis2 data',
           yaxis: 'y2',
-          type: 'scatter'
+          type: 'scatter',
+          marker: {
+            color: 'rgba(255, 125, 125, 1.0 )'
+          }
         };
 
-        var data = [trace0, trace1, trace2];
+        var data = [trace1, trace0, trace3];
 
         var layout = {
           title: 'BTC Rates',
-          barmode: 'stack',
+          barmode: 'overlay',
           paper_bgcolor: 'rgba(245,246,249,1)',
           plot_bgcolor: 'rgba(245,246,249,1)',
           width: window.innerWidth,

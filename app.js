@@ -5,47 +5,8 @@ const request      = require('request'),
       path         = require('path'),
       express      = require('express'),
       bodyParser   = require('body-parser'),
-      mongoose     = require('mongoose'),
-      rates        = require('./models/rates'),
-      coins        = ['STR','BTC','BTS','CLAM','DOGE','DASH','LTC','MAID','XMR','XRP','ETH','FCT'];
-
-// default to a 'localhost' configuration:
-var connection_string = '127.0.0.1:27017/ratebot';
-// if OPENSHIFT env variables are present, use the available connection info:
-if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
-  connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
-  process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
-  process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
-  process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
-  process.env.OPENSHIFT_APP_NAME;
-}
-
-mongoose.connect(connection_string);
-
-getRates();
-function getRates(){
-  console.log('Rates!');
-  request('https://poloniex.com/public?command=returnTicker', function(error, response, ticker){
-    ticker = JSON.parse(ticker);
-    coins.forEach(function(coin){
-      request('https://poloniex.com/public?command=returnLoanOrders&currency='+coin,function(error,response,body){
-        body = JSON.parse(body);
-        var rate = new rates({
-          coin : coin,
-          price: ticker[(coin === 'BTC' ? 'USDT_BTC' : 'BTC_' + coin  )]['last'],
-          offers: body['offers'],
-          demands: body['demands'],
-          created_at: new Date()
-        });
-        rate.save(function(err){
-          if(err){ console.log('Save error: ' + err); }
-          else{ console.log('Rate saved.'); }
-        });
-      });
-    });
-  });
-  setTimeout(getRates, 600000);
-}
+      mongoose     = require('./config/db'),
+      rates        = require('./models/rates');
 
 var app = express();
 
