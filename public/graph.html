@@ -26,9 +26,11 @@
       {},
       function(data) {
 
-        dates = data.map(function(slice){
-          return jQuery.format.date(slice.created_at, "yyyy-MM-dd HH:mm:ss")
+        dates = data.map(function(slice){ 
+          return jQuery.format.date(slice.created_at, "yyyy-MM-dd HH:mm:ss"); 
         });
+
+        prices = data.map(function(slice){ return parseFloat(slice.price); });   
 
         loOffers = data
           .map( function(slice){ return slice.offers; } )
@@ -38,7 +40,8 @@
               return true;
             });
           })
-          .map(function(offers){ return Math.min.apply(null, offers.map( function(offer){ return parseFloat( offer.rate ); } ) ); });
+          .map(function(offers){ return Math.min.apply(null, offers.map( function(offer){ return parseFloat( offer.rate ); } ) );
+          });
 
         hiDemands = data
           .map( function(slice){ return slice.demands; } )
@@ -48,12 +51,9 @@
               return true;
             });
           })
-          .map(function(demands){ return Math.max.apply(null, demands.map( function(demand){ return parseFloat(demand.rate); } ) ); });
-        console.log( hiDemands );
+          .map(function(demands){ return Math.max.apply(null, demands.map( function(demand){ return parseFloat(demand.rate); } ) );
+          });
  
-        prices = data.map(function(slice){ return parseFloat(slice.price); });   
-
-        //Base of highest demand
         var trace0 = {
           x: dates,
           y: hiDemands,
@@ -65,7 +65,7 @@
 
         var trace1 = {
           x: dates,
-          y: loOffers, //.map( function(offer,ind){ return offer - hiDemands[ind]; } ),
+          y: loOffers,
           marker: {
             color: 'rgba(125,125,255,1.0)'
           },
