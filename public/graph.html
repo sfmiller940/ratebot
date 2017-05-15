@@ -27,7 +27,7 @@
       function(data) {
 
         dates = data.map(function(slice){ 
-          return jQuery.format.date(slice.created_at, "yyyy-MM-dd HH:mm:ss"); 
+          return jQuery.format.date( new Date(slice.created_at), "yyyy-MM-dd HH:mm:ss"); 
         });
 
         prices = data.map(function(slice){ return parseFloat(slice.price); });   
