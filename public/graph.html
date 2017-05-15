@@ -7,40 +7,51 @@
 
 <body>
   
-  <div id="myDiv" style="width: 480px; height: 400px;"><!-- Plotly chart will be drawn inside this DIV --></div>
+  <div id="myDiv" style="width: 100%; height: 100%;"><!-- Plotly chart will be drawn inside this DIV --></div>
   <script>
 
     var dates, loOffers, hiDemands, heights, prices;
+    var d3 = Plotly.d3;
+    var gd3 = d3.select('#myDiv')
+        .append('div')
+        .style({
+            width: '100%',
+            height: '100%'
+        });
+    var gd = gd3.node();
+
 
     jQuery.get(
       "/BTC",
       {},
       function(data) {
+
         dates = data.map(function(slice){
           return jQuery.format.date(slice.created_at, "yyyy-MM-dd HH:mm:ss")
         });
-        console.log(dates);
+
         loOffers = data
           .map( function(slice){ return slice.offers; } )
           .map( function(offers){
             return offers.filter( function(offer){
-              if( parseFloat( offer.amount, 10) < 0.01 ){ return false; }
+              if( parseFloat( offer.amount ) < 0.01 ){ return false; }
               return true;
             });
           })
-          .map(function(offers){ return Math.min.apply(null, offers.map(function(offer){ return offer.rate } ) ); });
+          .map(function(offers){ return Math.min.apply(null, offers.map( function(offer){ return parseFloat( offer.rate ); } ) ); });
+
         hiDemands = data
           .map( function(slice){ return slice.demands; } )
-          .map( function(demands){
+          .map( function(demands,ind){
             return demands.filter( function(demand){
-              if( parseFloat( demand.amount, 10) < 0.01 ){ return false; }
+              if( parseFloat( demand.amount ) < 0.01 || parseFloat(demand.rate) > loOffers[ind] ){ return false; }
               return true;
             });
           })
-          .map(function(demands){ return Math.max.apply(null, demands.map(function(demand){ return demand.rate } ) ); });
+          .map(function(demands){ return Math.max.apply(null, demands.map( function(demand){ return parseFloat(demand.rate); } ) ); });
         console.log( hiDemands );
  
-        prices = data.map(function(slice){ return slice.price; });   
+        prices = data.map(function(slice){ return parseFloat(slice.price); });   
 
         //Base of highest demand
         var trace0 = {
@@ -79,8 +90,6 @@
           barmode: 'overlay',
           paper_bgcolor: 'rgba(245,246,249,1)',
           plot_bgcolor: 'rgba(245,246,249,1)',
-          width: window.innerWidth,
-          height: window.innerHeight,
           showlegend: false,
           annotations: [],
           xaxis : { type:'date' },
@@ -91,7 +100,11 @@
           }
         };
 
-        Plotly.newPlot('myDiv', data, layout);
+        Plotly.plot(gd, data, layout);
+
+        window.onresize = function() {
+          Plotly.Plots.resize(gd);
+        };
       }
     );
 
