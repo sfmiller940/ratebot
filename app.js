@@ -12,7 +12,7 @@ const coins        = ['STR','BTC','BTS','CLAM','DOGE','DASH','LTC','MAID','XMR',
       ratesFn      = require('./models/rates');
 
 var rates = new ratesFn();
-if (cluster.isMaster) rates.getRates(coins);
+rates.getRates(coins);
 
 var app = express();
 
