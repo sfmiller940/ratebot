@@ -46,6 +46,8 @@ function rates(){
             coinData[coin]['price'] /= coinData[coin]['num'];
             coinData[coin]['rate'] /= coinData[coin]['num'];
 
+            console.log('Saving '+ coin + ' ' + coinData[coin]['price'] + ' ' + coinData[coin]['rate'] + '...');
+
             var rate = new Rate({
               coin : coin,
               price: coinData[coin]['price'],
@@ -55,7 +57,6 @@ function rates(){
             
             rate.save(function(err){
               if(err){ console.log('Save error: ' + err ); }
-              else{ console.log('Saved: '+ coin + ' ' + coinData[coin]['price'] + ' ' + coinData[coin]['rate'] + "\n" ); }
             });
 
             coinData[coin]['price'] = coinData[coin]['rate'] = coinData[coin]['num'] = 0;
