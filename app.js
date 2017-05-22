@@ -27,19 +27,20 @@ app
 
   .get('/health', function(req, res){
     res.writeHead(200);
-    res.end();
+    res.end('Healthy.');
   })
 
-  .get('/', function(req,res){
-    fs.readFile( path.join(__dirname, 'public/index.html'), function (err, html) {
+  /*.get('/', function(req,res){
+    fs.readFile( path.join(__dirname, 'public') + 'index.html', function (err, html) {
         if (err) {
-            throw err; 
+          console.log('uhoh');
+            throw err;
         }       
         res.writeHeader(200, {"Content-Type": "text/html"});  
         res.write(html);  
         res.end();  
     });
-  })
+  })*/
 
   .get('/coins', function(req, res){
     res.json(coins);
