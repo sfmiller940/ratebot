@@ -51,6 +51,6 @@ app
     });
   })
 
-  .listen(env.NODE_PORT || 3000, env.NODE_IP || 'localhost');
+  .listen(env.OPENSHIFT_NODEJS_PORT || 3000, env.OPENSHIFT_NODEJS_IP || 'localhost');
 
 console.log('Server running.');
