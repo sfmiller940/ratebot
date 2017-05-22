@@ -26,15 +26,13 @@ app
     res.end();
   })
 
-  .get('/', function(req, res){
-    request('https://poloniex.com/public?command=returnTicker',function(error,response,body){
-      res.end(body);
-    });
+  .get('/coins', function(req, res){
+    res.json(coins);
   })
 
   .get('/:coin', function(req, res){
     rates.Rate.find({ coin: req.params.coin }, function (err, docs) {
-        res.json(docs);
+      res.json(docs);
     });
   })
 

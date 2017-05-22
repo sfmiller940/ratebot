@@ -37,7 +37,7 @@ function rates(){
         });
       });
     });
-    setTimeout(function(){ getRates(coins); }, 600000);
+    setTimeout(function(){ getRates(coins); }, 60000);
   };
 
   this.Rate = Rate;

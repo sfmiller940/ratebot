@@ -1,28 +1,5 @@
-<html>
-<head>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-dateFormat/1.0/jquery.dateFormat.min.js"></script>
-<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-<style>
-#coinSelector{
-  position: absolute;
-  top: 2rem;
-  left: 2rem;
-  z-index: 9;
-}
-</style>
-</head>
-
-<body>
-  <div id="coinSelector">
-    <select>
-      <option value="BTC">BTC</option>
-      <option value="LTC">LTC</option>
-    </select>
-  </div>
-  <div id="myDiv" style="width: 100%; height: 100%;"><!-- Plotly chart will be drawn inside this DIV --></div>
-  <script>
-
+(function($){
+  $().ready(function(){
     var d3 = Plotly.d3;
     var gd3 = d3.select('#myDiv')
         .append('div')
@@ -32,22 +9,16 @@
         });
     var gd = gd3.node();
 
-    var currentCoin = "BTC";
-    jQuery('#coinSelector select').change(function(){
-      currentCoin = $(this).val();
-      updateGraph(); 
-    });
-
     function updateGraph(){
-      jQuery.get(
-        currentCoin,
+      $.get(
+        $('#coinSelector select').val(),
         {},
         function(data) {
 
           var dates, loOffers, hiDemands, heights, prices;
 
           dates = data.map(function(slice){ 
-            return jQuery.format.date( new Date(slice.created_at), "yyyy-MM-dd HH:mm:ss"); 
+            return $.format.date( new Date(slice.created_at), "yyyy-MM-dd HH:mm:ss"); 
           });
 
           prices = data.map(function(slice){ return parseFloat(slice.price); });   
@@ -73,7 +44,7 @@
             })
             .map(function(demands){ return Math.max.apply(null, demands.map( function(demand){ return parseFloat(demand.rate); } ) );
             });
-   
+
           var trace0 = {
             x: dates,
             y: hiDemands,
@@ -128,8 +99,18 @@
         }
       );
     }
-    updateGraph();
 
-  </script>
-</body>
-</html>
+    $.get(
+      '/coins',
+      {},
+      function(coins){
+        coins.sort().forEach(function(coin){
+          $('#coinSelector select').append('<option value="'+coin+'">'+coin+'</option>');
+        });
+        updateGraph();
+      }
+    );
+    $('#coinSelector select').change( updateGraph );
+
+  });
+}(jQuery))
