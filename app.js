@@ -7,10 +7,10 @@ const coins        = ['STR','BTC','BTS','CLAM','DOGE','DASH','LTC','MAID','XMR',
       express      = require('express'),
       bodyParser   = require('body-parser'),
       mongoose     = require('./config/db'),
-      ratesFn        = require('./models/rates');
+      ratesFn      = require('./models/rates');
 
 var rates = new ratesFn();
-rates.getRates(coins, rates.Rate);
+rates.getRates(coins);
 
 var app = express();
 

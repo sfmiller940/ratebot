@@ -17,7 +17,7 @@ var rateSchema = new Schema({
 function rates(){
   var Rate = mongoose.model('Rate', rateSchema);
 
-  var getRates = function(coins, Rate){
+  var getRates = function(coins){
     request('https://poloniex.com/public?command=returnTicker', function(error, response, ticker){
       ticker = JSON.parse(ticker);
       coins.forEach(function(coin){
@@ -37,7 +37,7 @@ function rates(){
         });
       });
     });
-    setTimeout(function(){ getRates(coins, Rate); }, 600000);
+    setTimeout(function(){ getRates(coins); }, 600000);
   };
 
   this.Rate = Rate;
