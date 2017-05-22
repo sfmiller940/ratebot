@@ -31,7 +31,7 @@ app
   })
 
   .get('/', function(req,res){
-    fs.readFile('./public/index.html', function (err, html) {
+    fs.readFile( path.join(__dirname, 'public/index.html'), function (err, html) {
         if (err) {
             throw err; 
         }       
