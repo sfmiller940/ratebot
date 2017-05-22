@@ -1,12 +1,16 @@
 "use strict"
 
-const request      = require('request'),
+const coins        = ['STR','BTC','BTS','CLAM','DOGE','DASH','LTC','MAID','XMR','XRP','ETH','FCT'],
+      request      = require('request'),
       env          = process.env,
       path         = require('path'),
       express      = require('express'),
       bodyParser   = require('body-parser'),
       mongoose     = require('./config/db'),
-      rates        = require('./models/rates');
+      ratesFn        = require('./models/rates');
+
+var rates = new ratesFn();
+rates.getRates(coins, rates.Rate);
 
 var app = express();
 
@@ -29,7 +33,7 @@ app
   })
 
   .get('/:coin', function(req, res){
-    rates.find({ coin: req.params.coin }, function (err, docs) {
+    rates.Rate.find({ coin: req.params.coin }, function (err, docs) {
         res.json(docs);
     });
   })
