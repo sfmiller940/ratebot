@@ -14,6 +14,8 @@
     "body-parser": "*",
     "request": "*",
     "path": "*",
-    "mongoose": "*"
+    "mongoose": "*",
+    "fs": "*",
+    "cluster": "*"
   }
 }

@@ -9,10 +9,12 @@ const coins        = ['STR','BTC','BTS','CLAM','DOGE','DASH','LTC','MAID','XMR',
       bodyParser   = require('body-parser'),
       mongoose     = require('./config/db'),
       fs           = require('fs'),
-      ratesFn      = require('./models/rates');
+      ratesModel   = require('./models/rates');
 
-var rates = new ratesFn();
-rates.getRates(coins);
+var rates = new ratesModel();
+if( env.workerIndex == 0){
+  rates.getRates(coins);
+}
 
 var app = express();
 

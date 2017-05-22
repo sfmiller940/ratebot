@@ -8,11 +8,13 @@ const cluster = require('cluster'),
       production = process.env.NODE_ENV == 'production';
 
 let stopping = false;
+var workers=[];
 
 cluster.on('disconnect', function(worker) {
   if (production) {
     if (!stopping) {
-      cluster.fork();
+      var newWorker = cluster.fork( {'workerIndex': workers[worker.id] } );
+      workers[newWorker.id] = workers[worker.id];
     }
   } else {
     process.exit(1);
@@ -20,10 +22,11 @@ cluster.on('disconnect', function(worker) {
 });
 
 if (cluster.isMaster) {
-  const workerCount = 1; //process.env.NODE_CLUSTER_WORKERS || 4;
+  const workerCount = process.env.NODE_CLUSTER_WORKERS || 4;
   console.log(`Starting ${workerCount} workers...`);
   for (let i = 0; i < workerCount; i++) {
-    cluster.fork();
+    var worker = cluster.fork({ 'workerIndex' : i });
+    workers[worker.id] = i;
   }
   if (production) {
     stopSignals.forEach(function (signal) {
