@@ -1,8 +1,9 @@
 "use strict"
 
 const coins        = ['STR','BTC','BTS','CLAM','DOGE','DASH','LTC','MAID','XMR','XRP','ETH','FCT'],
-      request      = require('request'),
       env          = process.env,
+      cluster      = require('cluster'),
+      request      = require('request'),
       path         = require('path'),
       express      = require('express'),
       bodyParser   = require('body-parser'),
@@ -10,7 +11,7 @@ const coins        = ['STR','BTC','BTS','CLAM','DOGE','DASH','LTC','MAID','XMR',
       ratesFn      = require('./models/rates');
 
 var rates = new ratesFn();
-rates.getRates(coins);
+if (cluster.isMaster) rates.getRates(coins);
 
 var app = express();
 
