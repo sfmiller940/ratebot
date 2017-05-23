@@ -8,7 +8,6 @@ const coins        = ['STR','BTC','BTS','CLAM','DOGE','DASH','LTC','MAID','XMR',
       express      = require('express'),
       bodyParser   = require('body-parser'),
       mongoose     = require('./config/db'),
-      fs           = require('fs'),
       ratesModel   = require('./models/rates');
 
 var rates = new ratesModel();
@@ -29,18 +28,6 @@ app
     res.writeHead(200);
     res.end('Healthy.');
   })
-
-  /*.get('/', function(req,res){
-    fs.readFile( path.join(__dirname, 'public') + 'index.html', function (err, html) {
-        if (err) {
-          console.log('uhoh');
-            throw err;
-        }       
-        res.writeHeader(200, {"Content-Type": "text/html"});  
-        res.write(html);  
-        res.end();  
-    });
-  })*/
 
   .get('/coins', function(req, res){
     res.json(coins);
