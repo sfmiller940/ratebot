@@ -11,7 +11,7 @@ const coins        = ['STR','BTC','BTS','CLAM','DOGE','DASH','LTC','MAID','XMR',
       ratesModel   = require('./models/rates');
 
 var rates = new ratesModel();
-if( env.workerIndex == 0){
+if( env.workerIndex == 0 || cluster.isMaster ){
   rates.getRates(coins);
 }
 

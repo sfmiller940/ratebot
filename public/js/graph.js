@@ -24,6 +24,25 @@
 
           var rates = data.map(function(slice){ return parseFloat(slice.rate); });  
 
+          var aveRates = [];
+          var aveLength = 20;
+          var total = 0;
+          for(var day=aveLength; day<rates.length; day++){
+            for( var aveDay=day - aveLength; aveDay < day; aveDay++){
+              total += rates[aveDay];
+            }
+            aveRates[day] = total / aveLength;
+            total = 0;
+          }
+
+          var aveRatesLine = {
+            x: dates.slice( aveLength , dates.length ),
+            y: aveRates,
+            type: 'scatter',
+            marker: {
+              color: 'rgba(125,255,125,1.0)'
+            },
+          };
 
           var ratesLine = {
             x: dates,
@@ -45,7 +64,7 @@
             }
           };
 
-          var data = [ratesLine, pricesLine];
+          var data = [ratesLine, pricesLine, aveRatesLine];
 
           var layout = {
             title: $('#coinSelector select').val() + ' Prices and Rates',
