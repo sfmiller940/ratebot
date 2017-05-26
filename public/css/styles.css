@@ -4,3 +4,10 @@
   left: 2rem;
   z-index: 9;
 }
+
+#movingAve{
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  z-index: 9;
+}
