@@ -12,7 +12,7 @@ const cluster = require('cluster'),
       rates = new ratesModel(),
       startServer = require('./server.js'),
       pollTime = 30000,
-      saveTime = 300000;
+      saveTime = 900000;
 
 let stopping = false;
 
