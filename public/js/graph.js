@@ -34,12 +34,18 @@
       traces.push( aveRate( aveLengthInput.val() , 'rgb(125,255,255)' ) );
       var aveIndex = traces.length - 1;
       Plotly.addTraces(gd, traces[ aveIndex ]);
-      aveLengthWrap.prepend('<label><input type="checkbox" value="'+ aveIndex +'" checked>'+aveLengthInput.val() +'</label>');
-      aveLengthWrap.find('input[type="checkbox"]').change(function(){
-        Plotly.deleteTraces(gd, parseInt($(this).val()) );
+      aveLengthWrap.prepend('<label><input type="checkbox" name="ave'+aveIndex+'" id="ave'+aveIndex+'" value="'+ aveIndex +'" checked>'+aveLengthInput.val() +'</label>');
+      aveLengthInput.val('');
+
+      aveLengthWrap.find('#ave'+aveIndex).change(function(){
+        var removeInd = parseInt( $(this).val() );
+        Plotly.deleteTraces( gd, removeInd );
+        aveLengthWrap.find('input[type="checkbox"]').each(function(){
+          if( $(this).val() > removeInd ) $(this).val( $(this).val() - 1 );
+        });
+        traces.splice(removeInd,1);
         $(this).parent().remove();
       });
-      aveLengthInput.val('');
     });
 
     function updateGraph(){
@@ -100,7 +106,6 @@
             string,
             {},
             function(prices) {
-              console.log( string);
               traces[1]={
                 x: prices.map(function(slice){ return $.format.date( new Date(slice.date * 1000), "yyyy-MM-dd HH:mm:ss"); }),
                 y: prices.map(function(slice){ return slice.weightedAverage }),
