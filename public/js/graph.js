@@ -100,7 +100,7 @@
               + ($('#coinSelector select').val() == 'BTC' ? 'USDT_BTC' : 'BTC_' + $('#coinSelector select').val()  )
               + '&start=' + parseInt( Date.parse( traces[0].x[0] ) / 1000 )
               + '&end='+ parseInt( Date.parse( traces[0].x[ traces[0].x.length -1 ] ) / 1000 )
-              + '&period=300';
+              + '&period=900';
 
           $.get(
             string,
