@@ -5,16 +5,21 @@ const cluster = require('cluster'),
         'SIGHUP', 'SIGINT', 'SIGQUIT', 'SIGILL', 'SIGTRAP', 'SIGABRT',
         'SIGBUS', 'SIGFPE', 'SIGUSR1', 'SIGSEGV', 'SIGUSR2', 'SIGTERM'
       ],
-      production = process.env.NODE_ENV == 'production';
+      production = process.env.NODE_ENV == 'production',
+      mongoose = require('./config/db'),
+      coins = ['STR','BTC','BTS','CLAM','DOGE','DASH','LTC','MAID','XMR','XRP','ETH','FCT'],
+      ratesModel = require('./models/rates'),
+      rates = new ratesModel(),
+      startServer = require('./server.js'),
+      pollTime = 30000,
+      saveTime = 300000;
 
 let stopping = false;
-var workers=[];
 
 cluster.on('disconnect', function(worker) {
   if (production) {
     if (!stopping) {
-      var newWorker = cluster.fork( {'workerIndex': workers[worker.id] } );
-      workers[newWorker.id] = workers[worker.id];
+      cluster.fork();
     }
   } else {
     process.exit(1);
@@ -25,9 +30,9 @@ if (cluster.isMaster) {
   const workerCount = process.env.NODE_CLUSTER_WORKERS || 4;
   console.log(`Starting ${workerCount} workers...`);
   for (let i = 0; i < workerCount; i++) {
-    var worker = cluster.fork({ 'workerIndex' : i });
-    workers[worker.id] = i;
+    cluster.fork();
   }
+
   if (production) {
     stopSignals.forEach(function (signal) {
       process.on(signal, function () {
@@ -40,6 +45,9 @@ if (cluster.isMaster) {
       });
     });
   }
+
+  rates.getRates(coins, pollTime, saveTime);
+
 } else {
-  require('./app.js');
+  startServer(coins, rates);
 }
