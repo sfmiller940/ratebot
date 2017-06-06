@@ -19,15 +19,28 @@
     initGraph();
     function initGraph(){
       $.get(
-        '/coins',
+        '/rates',
         {},
-        function(coins){
-          coins.sort().forEach(function(coin){
-            $('#coinSelector select').append('<option value="'+coin+'">'+coin+'</option>');
+        function(rates){
+          rates.forEach(function(rate){
+            $('#coinSelector select').append('<option value="'+rate._id+'">'+rate._id+'</option>');
           });
+          updateRates(rates);
           updateGraph();
         }
       );
+    }
+
+    function updateRates(rates){
+      var rateDiv = '<table><tr class="row header"><th class="col coin">Coin</th><th class="col apy">APY</th><th class="col rate">24H</th></tr>';
+      rates.forEach(function(rate){
+        rateDiv += '<tr class="row">' 
+          + '<td class="col coin">' + rate._id + '</td>' 
+          + '<td class="col apy">' + ((Math.pow( 1 + rate.rate, 365 ) - 1) * 100).toFixed(2) +'%</td>'
+          + '<td class="col rate">' + (1 + rate.rate).toFixed(8) + '</td>' 
+          + '</tr>';
+      });
+      $('#currentRates').html(rateDiv);
     }
 
     function updateGraph(){
@@ -68,7 +81,6 @@
               };
 
               Plotly.newPlot(gd,[traces[0],traces[1]], {
-                title: coin + ' Prices and Rates',
                 paper_bgcolor: 'rgba(245,246,249,1)',
                 plot_bgcolor: 'rgba(245,246,249,1)',
                 showlegend: false,
