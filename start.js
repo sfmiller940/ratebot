@@ -12,8 +12,9 @@ const cluster = require('cluster'),
       rates = new ratesModel(),
       startServer = require('./server.js'),
       pollTime = 30000,
-      saveTime = 900000,
-      workers = [];
+      saveTime = 900000;
+
+      var workers = [];
 
 let stopping = false;
 
@@ -34,7 +35,7 @@ if (cluster.isMaster) {
   console.log(`Starting ${workerCount} workers...`);
   for (let i = 0; i < workerCount; i++) {
     var worker = cluster.fork({'workerInd':i});
-    workers[worker] = i;
+    workers[worker.id] = i;
   }
 
   if (production) {
