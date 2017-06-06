@@ -6,7 +6,11 @@ const env          = process.env,
       express      = require('express'),
       app          = express();
 
-function startServer(coins, rates){
+function startServer(coins, rates, pollTime, saveTime){
+
+  if( env.workerInd == 0 ){
+    rates.getRates(coins, pollTime, saveTime)
+  }
 
   app
     .use([

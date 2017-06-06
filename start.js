@@ -12,14 +12,17 @@ const cluster = require('cluster'),
       rates = new ratesModel(),
       startServer = require('./server.js'),
       pollTime = 30000,
-      saveTime = 900000;
+      saveTime = 900000,
+      workers = [];
 
 let stopping = false;
 
 cluster.on('disconnect', function(worker) {
   if (production) {
     if (!stopping) {
-      cluster.fork();
+      var newWorker = cluster.fork({'workerInd':workers[worker.id]});
+      workers[newWorker.id] = workers[worker.id];
+      delete workers[worker.id];
     }
   } else {
     process.exit(1);
@@ -30,7 +33,8 @@ if (cluster.isMaster) {
   const workerCount = process.env.NODE_CLUSTER_WORKERS || 4;
   console.log(`Starting ${workerCount} workers...`);
   for (let i = 0; i < workerCount; i++) {
-    cluster.fork();
+    var worker = cluster.fork({'workerInd':i});
+    workers[worker] = i;
   }
 
   if (production) {
@@ -45,9 +49,6 @@ if (cluster.isMaster) {
       });
     });
   }
-
-  rates.getRates(coins, pollTime, saveTime);
-
 } else {
-  startServer(coins, rates);
+  startServer(coins, rates, pollTime, saveTime);
 }
