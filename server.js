@@ -23,6 +23,23 @@ function startServer(coins, rates, pollTime, saveTime){
       res.end('Healthy.');
     })
 
+    .get('/rates', function(req, res){
+      rates.Rate.aggregate(
+        [ { $sort : { created_at: 1 } },
+          { 
+            $group:{ 
+              _id: "$coin",
+              rate: { $last: "$rate" }
+            }
+          },
+          { $sort : { _id: 1 }}
+        ]
+        ,function(err, result){
+          res.json(result);
+        }
+      );
+    })
+
     .get('/coins', function(req, res){
       res.json(coins);
     })
