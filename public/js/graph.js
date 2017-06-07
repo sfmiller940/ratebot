@@ -32,12 +32,12 @@
     }
 
     function updateRates(rates){
-      var rateDiv = '<table><tr class="row header"><th class="col coin">Coin</th><th class="col apy">APY</th><th class="col rate">24H</th></tr>';
+      var rateDiv = '<table><tr class="row header"><th class="col coin">Coin</th><th class="col apy">APY</th><th class="col rate">24HPY</th></tr>';
       rates.forEach(function(rate){
         rateDiv += '<tr class="row">' 
           + '<td class="col coin">' + rate._id + '</td>' 
           + '<td class="col apy">' + ((Math.pow( 1 + rate.rate, 365 ) - 1) * 100).toFixed(2) +'%</td>'
-          + '<td class="col rate">' + (1 + rate.rate).toFixed(8) + '</td>' 
+          + '<td class="col rate">' + (100 * rate.rate).toFixed(4) + '%</td>' 
           + '</tr>';
       });
       $('#currentRates').html(rateDiv);

@@ -33,6 +33,7 @@
   text-align: left;
 }
 
-#currentRates td.apy{
+#currentRates td.apy,
+#currentRates td.rate{
   text-align: right;
 }
