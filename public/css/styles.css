@@ -29,8 +29,7 @@
   padding-right: 1rem;
 }
 
-#currentRates th.coin,
-#currentRates th.apy{
+#currentRates th.coin{
   text-align: left;
 }
 
