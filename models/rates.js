@@ -26,6 +26,11 @@ function rates(){
 
       request('https://poloniex.com/public?command=returnLoanOrders&currency='+coin,function(error,response,body){
         
+        if(error){
+          console.log(error);
+          return;
+        }
+
         body = JSON.parse(body);
 
         coinData[coin]['num']++;
