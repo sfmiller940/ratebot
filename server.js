@@ -8,10 +8,6 @@ const env          = process.env,
 
 function startServer(coins, rates, pollTime, saveTime){
 
-  if( env.workerInd == 0 ){
-    rates.getRates(coins, pollTime, saveTime)
-  }
-
   app
     .use([
       bodyParser.json(),
