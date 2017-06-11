@@ -37,7 +37,7 @@ function startServer(coins, rates, pollTime, saveTime){
     })
 
     .get('/coins', function(req, res){
-      res.json(coins);
+      res.json(coins.sort());
     })
 
     .get('/:coin', function(req, res){
