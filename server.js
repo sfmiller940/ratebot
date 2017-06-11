@@ -36,10 +36,6 @@ function startServer(coins, rates, pollTime, saveTime){
       );
     })
 
-    .get('/coins', function(req, res){
-      res.json(coins.sort());
-    })
-
     .get('/:coin', function(req, res){
       rates.Rate.find({ coin: req.params.coin }, 'rate created_at -_id')
         .sort('created_at')
