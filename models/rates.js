@@ -2,6 +2,8 @@ const mongoose = require('mongoose'),
       Schema = mongoose.Schema,
       request = require('request');
 
+mongoose.Promise = global.Promise;
+
 var rateSchema = new Schema({
   coin: String,
   rate: Number,
