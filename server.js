@@ -6,7 +6,7 @@ const env          = process.env,
       express      = require('express'),
       app          = express();
 
-function startServer(coins, rates, pollTime, saveTime){
+function startServer(coins, rates ){
 
   app
     .use([

@@ -51,5 +51,5 @@ if (cluster.isMaster) {
   rates.getRates(coins, pollTime, saveTime);
 
 } else {
-  startServer(coins, rates, pollTime, saveTime);
+  startServer(coins, rates);
 }
