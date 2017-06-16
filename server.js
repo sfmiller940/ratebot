@@ -40,7 +40,8 @@ function startServer(coins, rates ){
       rates.Rate.find({ coin: req.params.coin }, 'rate created_at -_id')
         .sort('-created_at')
         .maxTime(100000)
-        .limit(1000000)
+        .limit(0)
+        .batchSize(0)
         .exec(function (err, docs) {
           if(err) console.log(err);
           res.json(docs.length);
