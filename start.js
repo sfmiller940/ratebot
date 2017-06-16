@@ -14,8 +14,6 @@ const cluster = require('cluster'),
       pollTime = 30000,
       saveTime = 900000;
 
-      var workers = [];
-
 let stopping = false;
 
 cluster.on('disconnect', function(worker) {
