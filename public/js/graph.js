@@ -63,8 +63,8 @@
           $.get(
             'https://poloniex.com/public?command=returnChartData'
               + '&currencyPair=' + (coin == 'BTC' ? 'USDT_BTC' : 'BTC_' + coin )
-              + '&start=' + parseInt( Date.parse( traces[0].x[0] ) / 1000 )
-              + '&end='+ parseInt( Date.parse( traces[0].x[ traces[0].x.length -1 ] ) / 1000 )
+              + '&end=' + parseInt( Date.parse( traces[0].x[0] ) / 1000 )
+              + '&start='+ parseInt( Date.parse( traces[0].x[ traces[0].x.length -1 ] ) / 1000 )
               + '&period=900',
             {},
             function(prices) {
