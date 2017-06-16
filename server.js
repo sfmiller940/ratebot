@@ -43,7 +43,7 @@ function startServer(coins, rates ){
         .limit(1000000)
         .exec(function (err, docs) {
           if(err) console.log(err);
-          res.json(docs);
+          res.json(docs.length);
         }
       );
     })
