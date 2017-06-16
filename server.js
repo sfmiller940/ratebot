@@ -41,7 +41,7 @@ function startServer(coins, rates ){
         .sort('-created_at')
         .maxTime(100000)
         .limit(0)
-        .batchSize(0)
+        .batchSize(100000)
         .exec(function (err, docs) {
           if(err) console.log(err);
           res.json(docs.length);
