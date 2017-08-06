@@ -1,6 +1,8 @@
 const mongoose = require('mongoose'),
       Schema = mongoose.Schema,
-      request = require('request');
+      request = require('request'),
+      pollTime = 30000,
+      saveTime = 900000;
 
 mongoose.Promise = global.Promise;
 
@@ -15,7 +17,7 @@ function rates(){
   var Rate = mongoose.model('Rate', rateSchema),
       coinData = [];
 
-  var getRates = function(coins, pollTime, saveTime){
+  var getRates = function(coins){
 
     coins.forEach(function(coin){
 

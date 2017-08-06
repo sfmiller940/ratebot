@@ -11,8 +11,7 @@ const cluster = require('cluster'),
       ratesModel = require('./models/rates'),
       rates = new ratesModel(),
       startServer = require('./server.js'),
-      pollTime = 30000,
-      saveTime = 900000;
+      workers=[];
 
 let stopping = false;
 

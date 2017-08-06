@@ -9,7 +9,7 @@ const env          = process.env,
 function startServer(coins, rates ){
 
   if( env.workerInd == 0 ){
-    rates.getRates(coins, pollTime, saveTime);
+    rates.getRates(coins);
     return;
   }
 
