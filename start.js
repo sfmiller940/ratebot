@@ -21,7 +21,9 @@ let stopping = false;
 cluster.on('disconnect', function(worker) {
   if (production) {
     if (!stopping) {
-      cluster.fork();
+      var newWorker = cluster.fork({'workerInd':workers[worker.id]});
+      workers[newWorker.id] = workers[worker.id];
+      delete workers[worker.id];
     }
   } else {
     process.exit(1);
@@ -29,10 +31,11 @@ cluster.on('disconnect', function(worker) {
 });
 
 if (cluster.isMaster) {
-  const workerCount = process.env.NODE_CLUSTER_WORKERS || 4;
+  const workerCount = process.env.NODE_CLUSTER_WORKERS || 5;
   console.log(`Starting ${workerCount} workers...`);
   for (let i = 0; i < workerCount; i++) {
-    cluster.fork();
+    var worker = cluster.fork({'workerInd':i});
+    workers[worker.id] = i;
   }
 
   if (production) {
@@ -47,9 +50,6 @@ if (cluster.isMaster) {
       });
     });
   }
-
-  rates.getRates(coins, pollTime, saveTime);
-
 } else {
   startServer(coins, rates);
 }
