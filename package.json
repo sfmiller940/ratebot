@@ -1,13 +1,20 @@
 {
-  "name": "nodebb",
+  "name": "ratebot",
   "version": "1.0.1",
-  "description": "Basic anonymous bulletin board.",
+  "description": "Bot for tracking lending rates at Poloniex",
+  "engines": {
+    "node": "8.0.0"
+  },
   "private": true,
   "main": "start.js",
   "scripts": {
     "start": "node --use_strict start.js"
   },
   "author": "SFMiller940 <nineforty@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sfmiller940/ratebot"
+  },
   "license": "ISC",
   "dependencies": {
     "express": "*",
