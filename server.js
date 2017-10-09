@@ -14,6 +14,9 @@ function startServer(coins, rates ){
   }
 
   app
+
+    .set('port', (process.env.PORT || 5000))
+
     .use([
       bodyParser.json(),
       express.static(path.join(__dirname, 'public')),
@@ -52,9 +55,9 @@ function startServer(coins, rates ){
       );
     })
 
-    .listen( env.PORT || env.OPENSHIFT_NODEJS_PORT || 3000, env.IP || env.OPENSHIFT_NODEJS_IP || 'localhost');
-    
-    console.log('Server running.');
+  .listen(app.get('port'), function() {
+    console.log('Node app is running on port', app.get('port'));
+  });
 };
 
 module.exports = startServer;
