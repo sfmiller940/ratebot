@@ -10,7 +10,7 @@ const cluster = require('cluster'),
       coins = ['STR','BTC','BTS','CLAM','DOGE','DASH','LTC','MAID','XMR','XRP','ETH','FCT'],
       ratesModel = require('./models/rates'),
       rates = new ratesModel(),
-      startServer = require('./server.js'),
+      startServer = require('./server'),
       workers=[];
 
 let stopping = false;
@@ -28,7 +28,7 @@ cluster.on('disconnect', function(worker) {
 });
 
 if (cluster.isMaster) {
-  const workerCount = process.env.NODE_CLUSTER_WORKERS || 5;
+  const workerCount = process.env.NODE_CLUSTER_WORKERS || 2;
   console.log(`Starting ${workerCount} workers...`);
   for (let i = 0; i < workerCount; i++) {
     var worker = cluster.fork({'workerInd':i});

@@ -8,7 +8,7 @@
   "private": true,
   "main": "start.js",
   "scripts": {
-    "start": "node --use_strict start.js"
+    "ratebot": "node --use_strict index.js"
   },
   "author": "SFMiller940 <nineforty@gmail.com>",
   "repository": {
