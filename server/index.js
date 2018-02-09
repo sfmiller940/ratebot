@@ -1,6 +1,5 @@
 "use strict"
 const env          = process.env,
-      request      = require('request'),
       path         = require('path'),
       bodyParser   = require('body-parser'),
       express      = require('express'),

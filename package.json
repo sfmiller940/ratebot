@@ -8,7 +8,8 @@
   "private": true,
   "main": "start.js",
   "scripts": {
-    "ratebot": "node --use_strict index.js"
+    "ratebot": "node --use_strict index.js",
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "author": "SFMiller940 <nineforty@gmail.com>",
   "repository": {
@@ -17,12 +18,35 @@
   },
   "license": "ISC",
   "dependencies": {
-    "express": "*",
+    "vue": "^2.5.8"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-stage-3": "^6.24.1",
     "body-parser": "*",
-    "request": "*",
-    "path": "*",
+    "cluster": "*",
+    "copy-webpack-plugin": "*",
+    "cross-env": "^5.0.5",
+    "css-loader": "^0.28.7",
+    "express": "*",
+    "file-loader": "^1.1.4",
+    "html-webpack-plugin": "*",
+    "http": "*",
+    "infinite-loop": "*",
     "mongoose": "*",
-    "fs": "*",
-    "cluster": "*"
+    "node-bittrex-api": "*",
+    "node-sass": "^4.5.3",
+    "path": "*",
+    "poloniex-api-node": "^1.6.5",
+    "request": "*",
+    "sass-loader": "^6.0.6",
+    "url-loader": "*",
+    "vue-loader": "^13.0.5",
+    "vue-template-compiler": "^2.4.4",
+    "webpack": "^3.6.0",
+    "webpack-dev-server": "^2.9.1",
+    "ws": "*"
   }
 }
