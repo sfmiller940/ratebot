@@ -1,12 +1,11 @@
 {
   "name": "ratebot",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "Bot for tracking lending rates at Poloniex",
   "engines": {
     "node": "8.0.0"
   },
   "private": true,
-  "main": "start.js",
   "scripts": {
     "ratebot": "node --use_strict index.js",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
