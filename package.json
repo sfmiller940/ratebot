@@ -1,12 +1,51 @@
 {
-  "name": "openshift-cartridge-nodejs-template",
-  "version": "1.0.1",
-  "description": "Custom Node.js cartridge for OpenShift - sample application",
-  "private": true,
-  "main": "start.js",
-  "scripts": {
-    "start": "node --use_strict start.js"
+  "name": "ratebot",
+  "version": "1.0.0",
+  "description": "Bot for tracking lending rates at Poloniex",
+  "engines": {
+    "node": "8.0.0"
   },
-  "author": "Ionut-Cristian Florescu <ionut.florescu@gmail.com>",
-  "license": "ISC"
+  "private": true,
+  "scripts": {
+    "ratebot": "node --use_strict index.js",
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+  },
+  "author": "SFMiller940 <nineforty@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sfmiller940/ratebot"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "vue": "^2.5.8"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-stage-3": "^6.24.1",
+    "body-parser": "*",
+    "cluster": "*",
+    "copy-webpack-plugin": "*",
+    "cross-env": "^5.0.5",
+    "css-loader": "^0.28.7",
+    "express": "*",
+    "file-loader": "^1.1.4",
+    "html-webpack-plugin": "*",
+    "http": "*",
+    "infinite-loop": "*",
+    "mongoose": "*",
+    "node-bittrex-api": "*",
+    "node-sass": "^4.5.3",
+    "path": "*",
+    "poloniex-api-node": "^1.6.5",
+    "request": "*",
+    "sass-loader": "^6.0.6",
+    "url-loader": "*",
+    "vue-loader": "^13.0.5",
+    "vue-template-compiler": "^2.4.4",
+    "webpack": "^3.6.0",
+    "webpack-dev-server": "^2.9.1",
+    "ws": "*"
+  }
 }

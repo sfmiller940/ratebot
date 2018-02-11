@@ -1,0 +1,45 @@
+html,
+body{
+  padding: 0;
+  margin: 0;
+}
+
+#coinSelector{
+  position: absolute;
+  top: 2rem;
+  left: 50%;
+  z-index: 9;
+  transform: translateX(-50%);
+}
+
+#movingAve{
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  z-index: 9;
+}
+
+#currentRates{
+  position: absolute;
+  z-index: 9;
+  left: 2rem;
+  top: 2rem;
+  border: 1px solid gray;
+  border-radius: 0.5rem;
+  background: rgba(255,255,200,0.2);
+  padding: 0.5rem;
+}
+
+#currentRates .col.apy{
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+#currentRates th.coin{
+  text-align: left;
+}
+
+#currentRates td.apy,
+#currentRates td.rate{
+  text-align: right;
+}
