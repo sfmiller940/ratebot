@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 
-var connection_string =  process.env.MONGODB_URI || 'mongodb://localhost:27017/ratebot';
-
-mongoose.connect(connection_string);
+mongoose.connect( process.env.MONGODB_URI || 'mongodb://localhost:27017/ratebot' );
 
 module.exports = mongoose;
