@@ -1,6 +1,6 @@
 {
   "name": "ratebot",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Bot for tracking lending rates at Poloniex",
   "engines": {
     "node": "8.0.0"
@@ -17,35 +17,35 @@
   },
   "license": "ISC",
   "dependencies": {
-    "vue": "^2.5.8"
+    "vue": "^2.5.16"
   },
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "babel-preset-env": "^1.6.0",
+    "babel-core": "^6.26.2",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
     "babel-preset-stage-3": "^6.24.1",
     "body-parser": "*",
     "cluster": "*",
     "copy-webpack-plugin": "*",
-    "cross-env": "^5.0.5",
-    "css-loader": "^0.28.7",
+    "cross-env": "^5.1.4",
+    "css-loader": "^0.28.11",
     "express": "*",
-    "file-loader": "^1.1.4",
+    "file-loader": "^1.1.11",
     "html-webpack-plugin": "*",
     "http": "*",
     "infinite-loop": "*",
     "mongoose": "*",
     "node-bittrex-api": "*",
-    "node-sass": "^4.5.3",
+    "node-sass": "^4.9.0",
     "path": "*",
-    "poloniex-api-node": "^1.6.5",
+    "poloniex-api-node": "^1.8.1",
     "request": "*",
-    "sass-loader": "^6.0.6",
+    "sass-loader": "^7.0.1",
     "url-loader": "*",
-    "vue-loader": "^13.0.5",
-    "vue-template-compiler": "^2.4.4",
-    "webpack": "^3.6.0",
-    "webpack-dev-server": "^2.9.1",
+    "vue-loader": "^15.0.3",
+    "vue-template-compiler": "^2.5.16",
+    "webpack": "^4.6.0",
+    "webpack-dev-server": "^3.1.3",
     "ws": "*"
   }
 }
