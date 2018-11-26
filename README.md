@@ -1,3 +1,5 @@
+**This project is officially defunct since Poloniex discontinued lending.**
+
 # ratebot - Poloniex Lending Rate Tracker
 
 Alpha version using node.js and plotly.js.
